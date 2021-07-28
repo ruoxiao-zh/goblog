@@ -87,7 +87,7 @@ func articlesStoreHandler(w http.ResponseWriter, r *http.Request) {
 	if body == "" {
 		errors["body"] = "内容不能为空"
 	} else if utf8.RuneCountInString(body) < 10 {
-		errors["body"] = "内容介于 3 ~ 40"
+		errors["body"] = "内容长度需大于或等于 10 个字节"
 	}
 
 	if len(errors) == 0 {
@@ -97,28 +97,6 @@ func articlesStoreHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "body 的值为: %v <br>", body)
 		fmt.Fprintf(w, "body 的长度为: %v <br>", len(body))
 	} else {
-		html := `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>创建文章 —— 我的技术博客</title>
-    <style type="text/css">.error {color: red;}</style>
-</head>
-<body>
-    <form action="{{ .URL }}" method="post">
-        <p><input type="text" name="title" value="{{ .Title }}"></p>
-        {{ with .Errors.title }}
-        <p class="error">{{ . }}</p>
-        {{ end }}
-        <p><textarea name="body" cols="30" rows="10">{{ .Body }}</textarea></p>
-        {{ with .Errors.body }}
-        <p class="error">{{ . }}</p>
-        {{ end }}
-        <p><button type="submit">提交</button></p>
-    </form>
-</body>
-</html>
-`
 		storeURL, _ := router.Get("articles.store").URL()
 
 		data := ArticlesFormData{
@@ -127,7 +105,7 @@ func articlesStoreHandler(w http.ResponseWriter, r *http.Request) {
 			URL:    storeURL,
 			Errors: errors,
 		}
-		tmpl, err := template.New("create-form").Parse(html)
+		tmpl, err := template.ParseFiles("resources/views/articles/create.gohtml")
 		if err != nil {
 			panic(err)
 		}
