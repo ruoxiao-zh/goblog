@@ -1,15 +1,15 @@
 package controllers
 
 import (
-	"database/sql"
 	"fmt"
 	"html/template"
 	"net/http"
 
-	"github.com/ruoxiao-zh/goblog/pkg/database"
+	"github.com/ruoxiao-zh/goblog/app/models/article"
 	"github.com/ruoxiao-zh/goblog/pkg/logger"
 	"github.com/ruoxiao-zh/goblog/pkg/route"
 	"github.com/ruoxiao-zh/goblog/pkg/types"
+	"gorm.io/gorm"
 )
 
 // ArticlesController 文章相关页面
@@ -22,11 +22,11 @@ func (*ArticlesController) Show(w http.ResponseWriter, r *http.Request) {
 	id := route.GetRouteVariable("id", r)
 
 	// 2. 读取对应的文章数据
-	article, err := getArticleByID(id)
+	articleInfo, err := article.Get(id)
 
 	// 3. 如果出现错误
 	if err != nil {
-		if err == sql.ErrNoRows {
+		if err == gorm.ErrRecordNotFound {
 			// 3.1 数据未找到
 			w.WriteHeader(http.StatusNotFound)
 			fmt.Fprint(w, "404 文章未找到")
@@ -45,20 +45,6 @@ func (*ArticlesController) Show(w http.ResponseWriter, r *http.Request) {
 			}).
 			ParseFiles("resources/views/articles/show.gohtml")
 		logger.LogError(err)
-		tmpl.Execute(w, article)
+		tmpl.Execute(w, articleInfo)
 	}
-}
-
-// Article  对应一条文章数据
-type Article struct {
-	Title, Body string
-	ID          int64
-}
-
-func getArticleByID(id string) (Article, error) {
-	article := Article{}
-	query := "SELECT * FROM articles WHERE id = ?"
-	err := database.DB.QueryRow(query, id).Scan(&article.ID, &article.Title, &article.Body)
-
-	return article, err
 }
