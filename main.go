@@ -378,6 +378,7 @@ func main() {
 	database.Initialize()
 	db = database.DB
 
+	bootstrap.SetupDB()
 	router = bootstrap.SetupRoute()
 
 	router.HandleFunc("/articles/create", articlesCreateHandler).Methods("GET").Name("articles.create")
