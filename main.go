@@ -16,6 +16,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/ruoxiao-zh/goblog/pkg/logger"
 	"github.com/ruoxiao-zh/goblog/pkg/route"
+	"github.com/ruoxiao-zh/goblog/pkg/types"
 )
 
 var router *mux.Router
@@ -134,18 +135,13 @@ func articlesShowHandler(w http.ResponseWriter, r *http.Request) {
 		tmpl, err := template.New("show.gohtml").
 			Funcs(template.FuncMap{
 				"RouteName2URL": route.Name2URL,
-				"Int64ToString": Int64ToString,
+				"Int64ToString": types.Int64ToString,
 			}).
 			ParseFiles("resources/views/articles/show.gohtml")
 		logger.LogError(err)
 
 		tmpl.Execute(w, article)
 	}
-}
-
-// Int64ToString 将 int64 转换为 string
-func Int64ToString(num int64) string {
-	return strconv.FormatInt(num, 10)
 }
 
 func articlesEditHandler(w http.ResponseWriter, r *http.Request) {
