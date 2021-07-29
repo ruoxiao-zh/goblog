@@ -23,9 +23,9 @@ var db *sql.DB
 func initDB() {
 	var err error
 	config := mysql.Config{
-		User:                 "homestead",
-		Passwd:               "secret",
-		Addr:                 "127.0.0.1:33060",
+		User:                 "root",
+		Passwd:               "root",
+		Addr:                 "127.0.0.1:3306",
 		Net:                  "tcp",
 		DBName:               "goblog",
 		AllowNativePasswords: true,
