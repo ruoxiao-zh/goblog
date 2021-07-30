@@ -1,9 +1,9 @@
 package article
 
 import (
-	"github.com/ruoxiao-zh/goblog/pkg/logger"
-	"github.com/ruoxiao-zh/goblog/pkg/model"
-	"github.com/ruoxiao-zh/goblog/pkg/types"
+	"goblog/pkg/logger"
+	"goblog/pkg/model"
+	"goblog/pkg/types"
 )
 
 // Get 通过 ID 获取文章

@@ -2,8 +2,8 @@ package bootstrap
 
 import (
 	"github.com/gorilla/mux"
-	"github.com/ruoxiao-zh/goblog/pkg/route"
-	"github.com/ruoxiao-zh/goblog/routes"
+	"goblog/pkg/route"
+	"goblog/routes"
 )
 
 // SetupRoute 路由初始化

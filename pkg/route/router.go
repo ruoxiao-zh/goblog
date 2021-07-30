@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/ruoxiao-zh/goblog/pkg/logger"
+	"goblog/pkg/logger"
 )
 
 var route *mux.Router

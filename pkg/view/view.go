@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/ruoxiao-zh/goblog/pkg/logger"
-	"github.com/ruoxiao-zh/goblog/pkg/route"
+	"goblog/pkg/logger"
+	"goblog/pkg/route"
 )
 
 // D 是 map[string]interface{} 的简写

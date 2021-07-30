@@ -3,9 +3,9 @@ package bootstrap
 import (
 	"time"
 
-	"github.com/ruoxiao-zh/goblog/app/models/article"
-	"github.com/ruoxiao-zh/goblog/app/models/user"
-	"github.com/ruoxiao-zh/goblog/pkg/model"
+	"goblog/app/models/article"
+	"goblog/app/models/user"
+	"goblog/pkg/model"
 	"gorm.io/gorm"
 )
 

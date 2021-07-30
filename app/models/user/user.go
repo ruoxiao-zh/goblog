@@ -1,7 +1,7 @@
 package user
 
 import (
-	"github.com/ruoxiao-zh/goblog/app/models"
+	"goblog/app/models"
 )
 
 // User 用户模型

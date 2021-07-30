@@ -5,10 +5,10 @@ import (
 	"net/http"
 	"unicode/utf8"
 
-	"github.com/ruoxiao-zh/goblog/app/models/article"
-	"github.com/ruoxiao-zh/goblog/pkg/logger"
-	"github.com/ruoxiao-zh/goblog/pkg/route"
-	"github.com/ruoxiao-zh/goblog/pkg/view"
+	"goblog/app/models/article"
+	"goblog/pkg/logger"
+	"goblog/pkg/route"
+	"goblog/pkg/view"
 	"gorm.io/gorm"
 )
 

@@ -3,8 +3,8 @@ package main
 import (
 	"net/http"
 
-	"github.com/ruoxiao-zh/goblog/app/http/middlewares"
-	"github.com/ruoxiao-zh/goblog/bootstrap"
+	"goblog/app/http/middlewares"
+	"goblog/bootstrap"
 )
 
 func main() {

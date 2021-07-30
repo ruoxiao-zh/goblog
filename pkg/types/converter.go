@@ -3,7 +3,7 @@ package types
 import (
 	"strconv"
 
-	"github.com/ruoxiao-zh/goblog/pkg/logger"
+	"goblog/pkg/logger"
 )
 
 // Int64ToString 将 int64 转换为 string

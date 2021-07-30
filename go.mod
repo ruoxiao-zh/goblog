@@ -1,4 +1,4 @@
-module github.com/ruoxiao-zh/goblog
+module goblog
 
 go 1.16
 

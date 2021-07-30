@@ -3,7 +3,7 @@ package models
 import (
 	"time"
 
-	"github.com/ruoxiao-zh/goblog/pkg/types"
+	"goblog/pkg/types"
 )
 
 // BaseModel 模型基类

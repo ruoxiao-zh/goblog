@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/ruoxiao-zh/goblog/pkg/logger"
+	"goblog/pkg/logger"
 	"gorm.io/gorm"
 	gormlogger "gorm.io/gorm/logger"
 

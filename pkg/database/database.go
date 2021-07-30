@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/go-sql-driver/mysql"
-	"github.com/ruoxiao-zh/goblog/pkg/logger"
+	"goblog/pkg/logger"
 )
 
 // DB 数据库对象

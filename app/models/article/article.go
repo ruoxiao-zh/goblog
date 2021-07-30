@@ -3,8 +3,8 @@ package article
 import (
 	"strconv"
 
-	"github.com/ruoxiao-zh/goblog/app/models"
-	"github.com/ruoxiao-zh/goblog/pkg/route"
+	"goblog/app/models"
+	"goblog/pkg/route"
 )
 
 // Article 文章模型

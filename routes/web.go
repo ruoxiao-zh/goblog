@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/ruoxiao-zh/goblog/app/http/controllers"
+	"goblog/app/http/controllers"
 )
 
 // RegisterWebRoutes 注册网页相关路由

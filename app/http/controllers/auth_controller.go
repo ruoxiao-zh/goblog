@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/ruoxiao-zh/goblog/app/models/user"
-	"github.com/ruoxiao-zh/goblog/app/requests"
-	"github.com/ruoxiao-zh/goblog/pkg/view"
+	"goblog/app/models/user"
+	"goblog/app/requests"
+	"goblog/pkg/view"
 )
 
 // AuthController 处理静态页面
