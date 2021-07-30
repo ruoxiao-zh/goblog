@@ -1,7 +1,6 @@
 package bootstrap
 
 import (
-
 	"github.com/gorilla/mux"
 	"github.com/ruoxiao-zh/goblog/pkg/route"
 	"github.com/ruoxiao-zh/goblog/routes"
