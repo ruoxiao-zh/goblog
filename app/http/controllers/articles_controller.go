@@ -4,14 +4,12 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	"path/filepath"
-	"strconv"
 	"unicode/utf8"
 
 	"github.com/ruoxiao-zh/goblog/app/models/article"
 	"github.com/ruoxiao-zh/goblog/pkg/logger"
 	"github.com/ruoxiao-zh/goblog/pkg/route"
-	"github.com/ruoxiao-zh/goblog/pkg/types"
+	"github.com/ruoxiao-zh/goblog/pkg/view"
 	"gorm.io/gorm"
 )
 
@@ -47,32 +45,13 @@ func (*ArticlesController) Show(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprint(w, "500 服务器内部错误")
 		}
 	} else {
-		// 4.0 设置模板相对路径
-		viewDir := "resources/views"
-
-		// 4.1 所有布局模板文件 Slice
-		files, err := filepath.Glob(viewDir + "/layouts/*.gohtml")
-		logger.LogError(err)
-
-		// 4.2 在 Slice 里新增我们的目标文件
-		newFiles := append(files, viewDir + "/articles/show.gohtml")
-
-		// 4.3 解析模板文件
-		tmpl, err := template.New("show.gohtml").
-			Funcs(template.FuncMap{
-				"RouteName2URL": route.Name2URL,
-				"Int64ToString": types.Int64ToString,
-			}).ParseFiles(newFiles...)
-		logger.LogError(err)
-
-		// 4.4 渲染模板，将所有文章的数据传输进去
-		tmpl.ExecuteTemplate(w, "app", _article)
+		// ---  4. 读取成功，显示文章 ---
+		view.Render(w, "articles.show", _article)
 	}
 }
 
 // Index 文章列表页
 func (*ArticlesController) Index(w http.ResponseWriter, r *http.Request) {
-
 	// 1. 获取结果集
 	articles, err := article.GetAll()
 
@@ -82,22 +61,8 @@ func (*ArticlesController) Index(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprint(w, "500 服务器内部错误")
 	} else {
-		// 2.0 设置模板相对路径
-		viewDir := "resources/views"
-
-		// 2.1 所有布局模板文件 Slice
-		files, err := filepath.Glob(viewDir + "/layouts/*.gohtml")
-		logger.LogError(err)
-
-		// 2.2 在 Slice 里新增我们的目标文件
-		newFiles := append(files, viewDir+"/articles/index.gohtml")
-
-		// 2.3 解析模板文件
-		tmpl, err := template.ParseFiles(newFiles...)
-		logger.LogError(err)
-
-		// 2.4 渲染模板，将所有文章的数据传输进去
-		tmpl.ExecuteTemplate(w, "app", articles)
+		// ---  2. 加载模板 ---
+		view.Render(w, "articles.index", articles)
 	}
 }
 
@@ -152,7 +117,7 @@ func (*ArticlesController) Store(w http.ResponseWriter, r *http.Request) {
 		}
 		_article.Create()
 		if _article.ID > 0 {
-			fmt.Fprint(w, "插入成功，ID 为"+strconv.FormatInt(int64(_article.ID), 10))
+			fmt.Fprint(w, "插入成功，ID 为" + _article.GetStringID())
 		} else {
 			w.WriteHeader(http.StatusInternalServerError)
 			fmt.Fprint(w, "创建文章失败，请联系管理员")
