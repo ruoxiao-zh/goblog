@@ -32,7 +32,7 @@ func (*ArticlesController) Show(w http.ResponseWriter, r *http.Request) {
 	id := route.GetRouteVariable("id", r)
 
 	// 2. 读取对应的文章数据
-	articleInfo, err := article.Get(id)
+	_article, err := article.Get(id)
 
 	// 3. 如果出现错误
 	if err != nil {
@@ -47,15 +47,26 @@ func (*ArticlesController) Show(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprint(w, "500 服务器内部错误")
 		}
 	} else {
-		// 4. 读取成功，显示文章
+		// 4.0 设置模板相对路径
+		viewDir := "resources/views"
+
+		// 4.1 所有布局模板文件 Slice
+		files, err := filepath.Glob(viewDir + "/layouts/*.gohtml")
+		logger.LogError(err)
+
+		// 4.2 在 Slice 里新增我们的目标文件
+		newFiles := append(files, viewDir + "/articles/show.gohtml")
+
+		// 4.3 解析模板文件
 		tmpl, err := template.New("show.gohtml").
 			Funcs(template.FuncMap{
 				"RouteName2URL": route.Name2URL,
 				"Int64ToString": types.Int64ToString,
-			}).
-			ParseFiles("resources/views/articles/show.gohtml")
+			}).ParseFiles(newFiles...)
 		logger.LogError(err)
-		tmpl.Execute(w, articleInfo)
+
+		// 4.4 渲染模板，将所有文章的数据传输进去
+		tmpl.ExecuteTemplate(w, "app", _article)
 	}
 }
 
@@ -79,7 +90,7 @@ func (*ArticlesController) Index(w http.ResponseWriter, r *http.Request) {
 		logger.LogError(err)
 
 		// 2.2 在 Slice 里新增我们的目标文件
-		newFiles := append(files, viewDir + "/articles/index.gohtml")
+		newFiles := append(files, viewDir+"/articles/index.gohtml")
 
 		// 2.3 解析模板文件
 		tmpl, err := template.ParseFiles(newFiles...)
@@ -169,7 +180,7 @@ func (*ArticlesController) Edit(w http.ResponseWriter, r *http.Request) {
 	id := route.GetRouteVariable("id", r)
 
 	// 2. 读取对应的文章数据
-	articleInfo, err := article.Get(id)
+	_article, err := article.Get(id)
 
 	// 3. 如果出现错误
 	if err != nil {
@@ -187,8 +198,8 @@ func (*ArticlesController) Edit(w http.ResponseWriter, r *http.Request) {
 		// 4. 读取成功，显示编辑文章表单
 		updateURL := route.Name2URL("articles.update", "id", id)
 		data := ArticlesFormData{
-			Title:  articleInfo.Title,
-			Body:   articleInfo.Body,
+			Title:  _article.Title,
+			Body:   _article.Body,
 			URL:    updateURL,
 			Errors: nil,
 		}
