@@ -58,7 +58,7 @@ func (*ArticlesController) Index(w http.ResponseWriter, r *http.Request) {
 		// ---  2. 加载模板 ---
 		view.Render(w, view.D{
 			"Articles": articles,
-		}, "articles.show", "articles._article_meta")
+		}, "articles.index", "articles._article_meta")
 	}
 }
 
