@@ -37,9 +37,8 @@ func (*CategoriesController) Store(w http.ResponseWriter, r *http.Request) {
 		// 创建文章分类
 		_category.Create()
 		if _category.ID > 0 {
-			fmt.Fprint(w, "创建成功！")
-			// indexURL := route.Name2URL("categories.show", "id", _category.GetStringID())
-			// http.Redirect(w, r, indexURL, http.StatusFound)
+			indexURL := route.Name2URL("categories.show", "id", _category.GetStringID())
+			http.Redirect(w, r, indexURL, http.StatusFound)
 		} else {
 			w.WriteHeader(http.StatusInternalServerError)
 			fmt.Fprint(w, "创建文章分类失败，请联系管理员")
@@ -62,7 +61,7 @@ func (cc *CategoriesController) Show(w http.ResponseWriter, r *http.Request) {
 	_category, err := category.Get(id)
 
 	// 3. 获取结果集
-	articles, pagerData, err := article.GetByCategoryID(_category.GetStringID(), r, 2)
+	articles, pagerData, err := article.GetByCategoryID(_category.GetStringID(), r, 5)
 
 	if err != nil {
 		cc.ResponseForSQLError(w, err)
