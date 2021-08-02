@@ -6,7 +6,6 @@ import (
 
 	"goblog/app/models/article"
 	"goblog/app/models/category"
-	// "goblog/app/policies"
 	"goblog/app/requests"
 	"goblog/pkg/route"
 	"goblog/pkg/view"
@@ -90,7 +89,7 @@ func (cc *CategoriesController) Edit(w http.ResponseWriter, r *http.Request) {
 		cc.ResponseForSQLError(w, err)
 	} else {
 
-		// 4. 读取成功，显示编辑文章表单
+		// 4. 读取成功，显示编辑文章分类表单
 		view.Render(w, view.D{
 			"Category": _category,
 			"Errors":   view.D{},
@@ -103,7 +102,7 @@ func (cc *CategoriesController) Update(w http.ResponseWriter, r *http.Request) {
 	// 1. 获取 URL 参数
 	id := route.GetRouteVariable("id", r)
 
-	// 2. 读取对应的文章数据
+	// 2. 读取对应的文章分类数据
 	_category, err := category.Get(id)
 
 	// 3. 如果出现错误
@@ -129,7 +128,7 @@ func (cc *CategoriesController) Update(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
-			// √ 更新成功，跳转到文章详情页
+			// √ 更新成功，跳转到文章分类详情页
 			if rowsAffected > 0 {
 				showURL := route.Name2URL("categories.show", "id", id)
 				http.Redirect(w, r, showURL, http.StatusFound)
