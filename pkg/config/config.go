@@ -40,6 +40,7 @@ func Env(envName string, defaultValue ...interface{}) interface{} {
 	if len(defaultValue) > 0 {
 		return Get(envName, defaultValue[0])
 	}
+	
 	return Get(envName)
 }
 
@@ -55,8 +56,10 @@ func Get(path string, defaultValue ...interface{}) interface{} {
 		if len(defaultValue) > 0 {
 			return defaultValue[0]
 		}
+
 		return nil
 	}
+
 	return Viper.Get(path)
 }
 
