@@ -24,7 +24,7 @@ func (ac *ArticlesController) Show(w http.ResponseWriter, r *http.Request) {
 	id := route.GetRouteVariable("id", r)
 
 	// 2. 读取对应的文章数据
-	article, err := article.Get(id)
+	_article, err := article.Get(id)
 
 	// 3. 如果出现错误
 	if err != nil {
@@ -32,8 +32,8 @@ func (ac *ArticlesController) Show(w http.ResponseWriter, r *http.Request) {
 	} else {
 		// ---  4. 读取成功，显示文章 ---
 		view.Render(w, view.D{
-			"Article":          article,
-			"CanModifyArticle": policies.CanModifyArticle(article),
+			"Article":          _article,
+			"CanModifyArticle": policies.CanModifyArticle(_article),
 		}, "articles.show", "articles._article_meta")
 	}
 }
