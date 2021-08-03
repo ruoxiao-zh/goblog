@@ -40,7 +40,7 @@ func Env(envName string, defaultValue ...interface{}) interface{} {
 	if len(defaultValue) > 0 {
 		return Get(envName, defaultValue[0])
 	}
-	
+
 	return Get(envName)
 }
 
