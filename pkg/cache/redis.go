@@ -18,14 +18,16 @@ func InitClient() *redis.Client {
 		Addr:     config.GetString("cache.redis.host") + ":" + config.GetString("cache.redis.port"),
 		Password: config.GetString("cache.redis.password"), // no password set
 		DB:       config.GetInt("cache.redis.database"),    // use default DB
-		PoolSize: 100,                                            // 连接池大小
+		PoolSize: config.GetInt("cache.redis.pool_size"),   // 连接池大小
 	})
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	_, err := Rdb.Ping(ctx).Result()
-	logger.LogError(err)
+	if err != nil {
+		logger.LogError(err)
+	}
 
 	return Rdb
 }
